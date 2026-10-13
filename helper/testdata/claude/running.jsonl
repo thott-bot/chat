@@ -1,0 +1,2 @@
+{"type":"system","subtype":"task_summary","detail":"Pinging localhost 40 times","uuid":"27408cfe-4ba3-4b5c-b547-0b2f41d0b4a8","session_id":"ab658e4c-8849-4ce6-b6c1-331109904993"}
+{"type":"system","subtype":"task_started","task_id":"bffxgs84p","tool_use_id":"toolu_01T9rmkUWB9Ts2EVZJjnSi5k","description":"Ping localhost 40 times","is_backgrounded":false,"task_type":"local_bash","uuid":"ec35404e-3625-4582-90e7-3e49bd1f0562","session_id":"ab658e4c-8849-4ce6-b6c1-331109904993"}

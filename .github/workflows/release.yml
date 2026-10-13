@@ -1,0 +1,138 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
+        with:
+          go-version-file: go.mod
+          cache-dependency-path: go.sum
+      - name: Windows race compiler
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: '"C:\msys64\mingw64\bin" >> $env:GITHUB_PATH'
+      - run: go vet ./...
+      - run: go test -race ./...
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
+      - name: Addon smoke test
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -q && sudo apt-get install -y lua5.1 && lua5.1 test/run.lua
+      - name: Build thott.bot chat.exe
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $version = $env:GITHUB_REF_NAME -replace '^v', ''
+          windres -I helper -i helper/windows.rc -O coff -o helper/resource_windows_amd64.syso
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          go build -trimpath -ldflags "-s -w -H windowsgui -X main.version=$version" -o "thott.bot chat.exe" ./helper
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          go mod download
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          go run ./tools/notices third-party-notices.txt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          Compress-Archive -LiteralPath "thott.bot chat.exe", LICENSE, third-party-notices.txt -DestinationPath thott.bot-chat-Windows.zip
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: runner.os == 'Windows'
+        with:
+          name: windows
+          path: thott.bot-chat-Windows.zip
+
+  macos:
+    needs: check
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
+        with:
+          go-version-file: go.mod
+          cache-dependency-path: go.sum
+      - name: Build thott.bot chat.app
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          for arch in arm64 amd64; do
+            CGO_ENABLED=1 GOOS=darwin GOARCH=$arch go build -trimpath -ldflags "-s -w -X main.version=$VERSION" -o "thott-bot-chat-$arch" ./helper
+          done
+          APP="thott.bot chat.app/Contents"
+          mkdir -p "$APP/MacOS" "$APP/Resources" AppIcon.iconset
+          lipo -create -output "$APP/MacOS/thott.bot chat" thott-bot-chat-arm64 thott-bot-chat-amd64
+          for size in 16 32 128 256 512; do
+            sips -z $size $size helper/assets/app-icon.png --out "AppIcon.iconset/icon_${size}x${size}.png"
+            sips -z $((size * 2)) $((size * 2)) helper/assets/app-icon.png --out "AppIcon.iconset/icon_${size}x${size}@2x.png"
+          done
+          iconutil -c icns AppIcon.iconset -o "$APP/Resources/AppIcon.icns"
+          cp LICENSE "$APP/Resources/LICENSE"
+          go mod download
+          go run ./tools/notices "$APP/Resources/third-party-notices.txt"
+          cat > "$APP/Info.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+          	<key>CFBundleIdentifier</key><string>bot.thott.chat</string>
+          	<key>CFBundleName</key><string>thott.bot chat</string>
+          	<key>CFBundleDisplayName</key><string>thott.bot chat</string>
+          	<key>CFBundleExecutable</key><string>thott.bot chat</string>
+          	<key>CFBundleIconFile</key><string>AppIcon</string>
+          	<key>CFBundlePackageType</key><string>APPL</string>
+          	<key>CFBundleShortVersionString</key><string>$VERSION</string>
+          	<key>CFBundleVersion</key><string>$VERSION</string>
+          	<key>LSMinimumSystemVersion</key><string>12.0</string>
+          	<key>LSUIElement</key><true/>
+          	<key>NSHighResolutionCapable</key><true/>
+          </dict>
+          </plist>
+          EOF
+          plutil -lint "$APP/Info.plist"
+          lipo -info "$APP/MacOS/thott.bot chat"
+          # An ad-hoc signature seals the whole bundle, so Gatekeeper sees one consistent app. It needs no identity.
+          codesign --force --deep -s - "thott.bot chat.app"
+          ditto -c -k --keepParent "thott.bot chat.app" thott.bot-chat-macOS.zip
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: macos
+          path: thott.bot-chat-macOS.zip
+
+  release:
+    needs: [check, macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          path: dist
+          merge-multiple: true
+      # v4.2.2
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6
+        with:
+          subject-path: |
+            dist/thott.bot-chat-macOS.zip
+            dist/thott.bot-chat-Windows.zip
+      - name: Publish the release
+        working-directory: dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sha256sum thott.bot-chat-macOS.zip thott.bot-chat-Windows.zip > SHA256SUMS
+          gh release create "$GITHUB_REF_NAME" thott.bot-chat-macOS.zip thott.bot-chat-Windows.zip SHA256SUMS \
+            --repo "$GITHUB_REPOSITORY" --title "thott.bot chat ${GITHUB_REF_NAME#v}" \
+            --notes "Unzip it and open thott.bot chat, which lives in the menu bar on a Mac or the system tray on Windows."

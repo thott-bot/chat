@@ -1,0 +1,142 @@
+{
+  "now": 1790968020,
+  "character": {
+    "name": "Elandra",
+    "level": 33,
+    "race": "Human",
+    "class": "Mage",
+    "color": "class-mage",
+    "contextText": "Game: WoW Forever 1.60.1.70245\nCharacter: level 33 Human Mage, Alliance · XP 41200 / 66300, rested 12000 · 34g 56s 78c\nLocation: Refuge Pointe, Arathi Highlands 45.0, 47.0 · resting\nQuests (2):\n  Hints of a New Plague? (quest:657) level 34 · ready to turn in\n  Land Ho! (quest:663) level 35\nEquipped: item:7048, item:4320, item:7046\nBags: item:6948, item:4306 ×14, item:4338 ×6\nTalents: Improved Frostbolt (Rank 5), Frostbite (Rank 3), Ice Shards (Rank 2)\nSkills: Tailoring 165/225, First Aid 150/225, Staves 165/165, Daggers 120/165\nSpells known: Frostbolt (Rank 5), Fireball (Rank 6), Frost Nova (Rank 3), Blink, Polymorph (Rank 2), Arcane Intellect (Rank 2), Mage Armor (Rank 1), Conjure Water (Rank 4), Evocation, Counterspell\nReputation: Stormwind (faction:72) 4000, Ironforge (faction:47) 3100, Darnassus (faction:69) 3100, Gnomeregan Exiles (faction:54) 3100\nBuffs: Arcane Intellect, Mage Armor",
+    "zone": "Arathi Highlands",
+    "subzone": "Refuge Pointe",
+    "xp": 41200,
+    "xpMax": 66300,
+    "rested": 12000,
+    "quests": 14
+  },
+  "payloads": {
+    "ready": {
+      "v": 4,
+      "rev": 1790968019000,
+      "at": 1790968019,
+      "helper": "0.3.0",
+      "codex": "ready",
+      "note": "",
+      "acks": { "s1790960000": [9] },
+      "models": [
+        {"id": "gpt-6.1-sol", "label": "GPT-6.1-Sol", "default": true, "effort": "low", "efforts": ["low", "medium", "high", "xhigh", "max", "ultra"]},
+        {"id": "gpt-6-astra", "label": "GPT-6-Astra", "default": false, "effort": "medium", "efforts": ["low", "medium", "high", "xhigh", "max", "ultra"]},
+        {"id": "gpt-6-sol", "label": "GPT-6-Sol", "default": false, "effort": "medium", "efforts": ["low", "medium", "high", "xhigh", "max", "ultra"]},
+        {"id": "gpt-6-luna", "label": "GPT-6-Luna", "default": false, "effort": "medium", "efforts": ["low", "medium", "high", "xhigh", "max"]},
+        {"id": "gpt-5.6-sol", "label": "GPT-5.6-Sol", "default": false, "effort": "low", "efforts": ["low", "medium", "high", "xhigh", "max", "ultra"]},
+        {"id": "gpt-5.6-terra", "label": "GPT-5.6-Terra", "default": false, "effort": "medium", "efforts": ["low", "medium", "high", "xhigh", "max", "ultra"]},
+        {"id": "gpt-5.6-luna", "label": "GPT-5.6-Luna", "default": false, "effort": "medium", "efforts": ["low", "medium", "high", "xhigh", "max"]},
+        {"id": "gpt-5.5", "label": "GPT-5.5", "default": false, "effort": "medium", "efforts": ["low", "medium", "high", "xhigh"]},
+        {"id": "claude:opus", "label": "Claude Opus", "default": false, "effort": "high", "efforts": ["low", "medium", "high", "xhigh", "max"]},
+        {"id": "claude:sonnet", "label": "Claude Sonnet", "default": false, "effort": "high", "efforts": ["low", "medium", "high", "xhigh", "max"]}
+      ],
+      "projects": [
+        { "label": "wow", "cwd": "~/wow" },
+        { "label": "ManaBar", "cwd": "~/code/ManaBar" }
+      ],
+      "threads": [
+        {
+          "id": "019a7c2e-0003", "agent": "codex", "title": "Which of my quests are close by?", "state": "active",
+          "project": "wow", "cwd": "~/wow", "model": "gpt-6.1-sol", "effort": "medium", "contextLeft": 91,
+          "updated": 1790967995, "since": 1790967995, "unread": false, "origin": "s1790960000:9",
+          "activity": "Using search",
+          "turns": [
+            { "role": "user", "text": "Which of my quests are close by?", "at": 1790967995, "context": true },
+            { "role": "activity", "text": "Used 1 tool", "items": ["thott.bot · search"] }
+          ]
+        },
+        {
+          "id": "019a7c2e-0004", "agent": "codex", "title": "Add a mana bar under my player frame", "state": "needs_you",
+          "project": "ManaBar", "cwd": "~/code/ManaBar", "model": "gpt-6.1-sol", "effort": "high", "contextLeft": 78,
+          "updated": 1790967900, "since": 1790967720, "unread": true, "origin": "s1790960000:7",
+          "activity": "Waiting for approval",
+          "approval": { "id": "1-12", "kind": "command", "text": "luacheck ManaBar.lua Bars.lua", "reason": "Checks the changed files for Lua errors before you reload." },
+          "turns": [
+            { "role": "user", "text": "Add a thin mana bar under my player frame, the same width as the frame.", "at": 1790967720, "context": true },
+            { "role": "activity", "text": "Read 3 files, changed 2 files", "items": ["Read ManaBar.toc", "Read ManaBar.lua", "Read Bars.lua", "Edited ManaBar.lua", "Edited Bars.lua"] }
+          ]
+        },
+        {
+          "id": "019a7c2e-0002", "agent": "codex", "title": "Running out of mana between pulls", "state": "idle",
+          "project": "wow", "cwd": "~/wow", "model": "gpt-6.1-sol", "effort": "medium", "contextLeft": 84,
+          "updated": 1790967780, "unread": false, "origin": "s1790960000:4",
+          "turns": [
+            { "role": "user", "text": "I keep running out of mana between pulls. Anything coming up that helps?", "at": 1790967690, "context": true },
+            { "role": "activity", "text": "Used 3 tools", "items": ["thott.bot · search", "thott.bot · fetch", "thott.bot · fetch"] },
+            { "role": "assistant", "text": "Two things, one of them a level away.\n\n- At **34** you can train **Mage Armor**. In Forever it keeps 50% of your mana regeneration going while you cast, up from 30% in Classic Era, and adds 5 resistance to all magic. Use it instead of Frost Armor while you quest.\n- You already have **Evocation**: 8 seconds of mana regeneration raised by 1500%, every 8 minutes. Save it for the pull that would otherwise make you stop and drink.", "at": 1790967780 }
+          ]
+        },
+        {
+          "id": "6d2f9b14-0006", "agent": "claude", "title": "Move my mana bar after combat ends", "state": "idle",
+          "project": "ManaBar", "cwd": "~/code/ManaBar", "model": "claude:opus", "effort": "high", "contextLeft": 93,
+          "updated": 1790967300, "unread": true, "origin": "s1790960000:2",
+          "turns": [
+            { "role": "user", "text": "My mana bar throws an error when I drag it during a fight. Can you fix it?", "at": 1790967200, "context": true },
+            { "role": "activity", "text": "Read 2 files, changed 1 file, used 1 tool", "items": ["thott.bot · search", "Read ManaBar.lua", "Read Bars.lua", "Edited ManaBar.lua"] },
+            { "role": "assistant", "text": "The bar is anchored to your player frame, which the game protects in combat, so moving it then is blocked.\n\n- **ManaBar.lua** now checks `InCombatLockdown()` before moving the bar.\n- A move asked for in combat waits for `PLAYER_REGEN_ENABLED` and happens as the fight ends.", "at": 1790967300 }
+          ]
+        },
+        {
+          "id": "019a7c2e-0005", "agent": "codex", "title": "Fix the bag sort error after a reload", "state": "error",
+          "project": "ManaBar", "cwd": "~/code/ManaBar", "model": "gpt-6.1-sol", "effort": "medium",
+          "updated": 1790956020, "unread": false,
+          "error": "Open in the Codex app. Reply there, or close it there first.",
+          "turns": [
+            { "role": "user", "text": "Sorting my bags right after a reload throws an error. Can you find out why?", "at": 1790955900, "context": true },
+            { "role": "activity", "text": "Read 2 files, searched 1 time", "items": ["Read Sort.lua", "Read Bags.lua", "Searched for PLAYER_ENTERING_WORLD"] }
+          ]
+        },
+        {
+          "id": "019a7c2e-0001", "agent": "codex", "title": "Where do I train Mage Armor?", "state": "history",
+          "project": "wow", "cwd": "~/wow", "model": "gpt-6.1-sol", "effort": "medium",
+          "updated": 1790881620, "unread": false,
+          "turns": []
+        }
+      ]
+    },
+    "offline": {
+      "v": 4,
+      "rev": 1790967000000,
+      "at": 1790967000,
+      "helper": "0.3.0",
+      "codex": "offline",
+      "note": "The thott.bot chat app isn't running."
+    },
+    "restart": {
+      "v": 4,
+      "rev": 1790967000000,
+      "at": 1790967000,
+      "helper": "0.3.0",
+      "codex": "restart",
+      "note": "Restart WoW to finish setup."
+    }
+  },
+  "scenes": [
+    { "group": "Conversation", "name": "A question about your character", "payload": "ready", "view": { "selected": "019a7c2e-0002", "open": ["1"] } },
+    { "group": "Conversation", "name": "Sending a reply", "payload": "ready", "view": { "selected": "019a7c2e-0002", "outbox": { "019a7c2e-0002": [{ "role": "user", "text": "Thanks. Where do I train it?", "at": 1790968017, "context": true, "status": "Sending…" }] } } },
+    { "group": "Conversation", "name": "Claude replied", "payload": "ready", "view": { "selected": "6d2f9b14-0006", "open": ["1"] } },
+    { "group": "Conversation", "name": "New conversation", "payload": "ready", "view": { "screen": "new" } },
+    { "group": "Conversation", "name": "Your conversations", "payload": "ready", "view": { "selected": "019a7c2e-0002", "sidebar": true } },
+    { "group": "Conversation", "name": "Group and sort conversations", "payload": "ready", "view": { "selected": "019a7c2e-0002", "sidebar": true, "sorting": true } },
+    { "group": "AI at work", "name": "Codex working", "payload": "ready", "view": { "selected": "019a7c2e-0003" } },
+    { "group": "AI at work", "name": "Approve a command", "payload": "ready", "view": { "selected": "019a7c2e-0004" } },
+    { "group": "AI at work", "name": "Stopped", "payload": "ready", "view": { "selected": "019a7c2e-0005" } },
+    { "group": "Menus", "name": "Settings", "payload": "ready", "view": { "selected": "019a7c2e-0002", "panel": "settings", "world": true } },
+    { "group": "Menus", "name": "What's sent", "payload": "ready", "view": { "selected": "019a7c2e-0002", "panel": "context" } },
+    { "group": "Menus", "name": "Choose model and project", "payload": "ready", "view": { "screen": "new", "panel": "choice" } },
+    { "group": "Menus", "name": "Exactly what's sent", "payload": "ready", "view": { "selected": "019a7c2e-0002", "panel": "preview", "parts": ["Character", "Location", "Quest log", "Gear", "Bags", "Talents", "Skills", "Spells known", "Target", "Reputation", "Buffs"] } },
+    { "group": "Alerts", "name": "Codex signed out", "payload": "ready", "view": { "selected": "019a7c2e-0002", "notice": { "text": "Sign in to the Codex CLI on this computer." } } },
+    { "group": "Alerts", "name": "No CLI found", "payload": "ready", "view": { "selected": "019a7c2e-0002", "notice": { "text": "Install the Codex CLI or the Claude Code CLI." } } },
+    { "group": "Alerts", "name": "Updates running low", "payload": "ready", "view": { "selected": "019a7c2e-0002", "notice": { "text": "Live updates run out soon this session.", "reload": true } } },
+    { "group": "Alerts", "name": "Alerts", "payload": "ready", "view": { "toasts": ["019a7c2e-0004", "019a7c2e-0002", "019a7c2e-0005"] } },
+    { "group": "Window", "name": "First run", "payload": "offline" },
+    { "group": "Window", "name": "Restart WoW", "payload": "restart" },
+    { "group": "Window", "name": "Minimized", "payload": "ready", "view": { "selected": "019a7c2e-0003", "mini": true } },
+    { "group": "Conversation", "name": "Rename a conversation", "payload": "ready", "view": { "selected": "019a7c2e-0002", "renaming": true } }
+  ]
+}

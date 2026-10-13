@@ -1,0 +1,29 @@
+## Interface: 16001
+## Title: thott.bot chat
+## Notes: Talk to Codex or Claude Code from inside the game, sharing only the parts of your character you switch on.
+## Author: thott.bot
+## Version: 0.4.2
+## Category: thott.bot chat
+## DefaultState: enabled
+## SavedVariables: thott_bot_chat_settings
+## IconTexture: Interface\AddOns\thott-bot-chat\Media\Emblem
+## AddonCompartmentFunc: thott_bot_chat_on_addon_compartment_click
+## AddonCompartmentFuncOnEnter: thott_bot_chat_on_addon_compartment_enter
+## AddonCompartmentFuncOnLeave: thott_bot_chat_on_addon_compartment_leave
+
+Core.lua
+Tokens.lua
+Format.lua
+Kit.lua
+Store.lua
+Transport.lua
+Sync.lua
+Context.lua
+Actions.lua
+Composer.lua
+Transcript.lua
+List.lua
+Glance.lua
+Popovers.lua
+Window.lua
+Alerts.lua

@@ -1,0 +1,11 @@
+# Build outputs (.github/workflows/release.yml)
+/helper/resource_windows_amd64.syso
+/thott.bot chat.exe
+/thott.bot chat.app/
+/AppIcon.iconset/
+/thott-bot-chat-arm64
+/thott-bot-chat-amd64
+/thott.bot-chat-*.zip
+/dist/
+.DS_Store
+/third-party-notices.txt
