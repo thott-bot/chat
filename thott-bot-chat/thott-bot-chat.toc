@@ -2,7 +2,7 @@
 ## Title: thott.bot chat
 ## Notes: Talk to Codex or Claude Code from inside the game, sharing only the parts of your character you switch on.
 ## Author: thott.bot
-## Version: 0.4.3
+## Version: 0.4.4
 ## Category: thott.bot chat
 ## DefaultState: enabled
 ## SavedVariables: thott_bot_chat_settings
