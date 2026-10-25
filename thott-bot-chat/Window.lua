@@ -42,12 +42,12 @@ end
 
 local function title()
     if not online() or layout().mini then
-        return "thott.bot chat"
+        return "thott.bot"
     elseif screen == "new" then
         return "New conversation"
     end
     local thread = current()
-    return thread and Store.Title(thread) or "thott.bot chat"
+    return thread and Store.Title(thread) or "thott.bot"
 end
 
 local function about(thread)

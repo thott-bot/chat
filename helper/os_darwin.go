@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	wowCandidates = []string{"/Applications/World of Warcraft/" + foreverFolder}
+	wowCandidates = []string{"/Applications/World of Warcraft/" + foreverFolder, "/Applications/World of Warcraft/" + betaFolder}
 
 	extraPath = []string{"/opt/homebrew/bin", "/usr/local/bin"}
 )

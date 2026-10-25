@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"strings"
 	"syscall"
 	"time"
@@ -18,6 +19,8 @@ var (
 	wowCandidates = []string{
 		filepath.Join(os.Getenv("ProgramFiles(x86)"), "World of Warcraft", foreverFolder),
 		filepath.Join(os.Getenv("ProgramFiles"), "World of Warcraft", foreverFolder),
+		filepath.Join(os.Getenv("ProgramFiles(x86)"), "World of Warcraft", betaFolder),
+		filepath.Join(os.Getenv("ProgramFiles"), "World of Warcraft", betaFolder),
 	}
 	extraPath []string
 )
@@ -35,7 +38,7 @@ func processPaths() []string {
 			continue
 		}
 		name := windows.UTF16ToString(entry.ExeFile[:])
-		if strings.EqualFold(name, "WowB.exe") || strings.EqualFold(name, "Wow.exe") {
+		if slices.ContainsFunc(foreverExes, func(exe string) bool { return strings.EqualFold(name, exe) }) {
 			if path := imagePath(entry.ProcessID); path != "" {
 				paths = append(paths, path)
 			}

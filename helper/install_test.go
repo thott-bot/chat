@@ -113,7 +113,7 @@ func TestFreshForeverInstall(t *testing.T) {
 	root := t.TempDir()
 	dir := filepath.Join(root, foreverFolder)
 	os.MkdirAll(dir, 0o700)
-	os.WriteFile(filepath.Join(dir, ".flavor.info"), []byte("Product Flavor!STRING:0\r\nwow_classic_beta\r\n"), 0o600)
+	os.WriteFile(filepath.Join(dir, ".flavor.info"), []byte("Product Flavor!STRING:0\r\nwowf\r\n"), 0o600)
 	if got := normalizeChoice(root); got != dir {
 		t.Fatalf("fresh install before first launch = %q", got)
 	}
